@@ -1,0 +1,25 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n", shape=parallelogram];
+    call  [label="Call countZeros(n)", shape=rectangle];
+    base  [label="n == 0 ?", shape=diamond];
+    ret0  [label="Return 0", shape=rectangle];
+    chk   [label="(n % 10) == 0 ?", shape=diamond];
+    rec1  [label="Call countZeros(n / 10)\nresult = countZeros(n/10)", shape=rectangle];
+    rec2  [label="Call countZeros(n / 10)\nresult = 1 + countZeros(n/10)", shape=rectangle];
+    out   [label="Print / Return result", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret0 [label="Yes"];
+    base -> chk [label="No"];
+    chk -> rec1 [label="No"];
+    chk -> rec2 [label="Yes"];
+    rec1 -> base [label="recursive call"];
+    rec2 -> base [label="recursive call"];
+    rec1 -> out [label="on return"];
+    rec2 -> out [label="on return"];
+    ret0 -> out [style=dashed, label="unwind"];
+    out -> endn;
+}

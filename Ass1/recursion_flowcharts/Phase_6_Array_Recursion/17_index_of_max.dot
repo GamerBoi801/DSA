@@ -1,0 +1,26 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input array arr[], size n", shape=parallelogram];
+    call  [label="Call maxIndex(arr, i = 0, n)", shape=rectangle];
+    base  [label="i == n - 1 ?\n(last index)", shape=diamond];
+    reti  [label="Return i", shape=rectangle];
+    rec   [label="Call maxIndex(arr, i + 1, n)\nrestIdx = maxIndex(arr, i+1, n)", shape=rectangle];
+    cmp   [label="arr[i] >= arr[restIdx] ?", shape=diamond];
+    useI  [label="result = i", shape=rectangle];
+    useR  [label="result = restIdx", shape=rectangle];
+    out   [label="Print / Return result", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> reti [label="Yes"];
+    base -> rec [label="No"];
+    rec -> base [label="recursive call"];
+    rec -> cmp [label="on return"];
+    cmp -> useI [label="Yes"];
+    cmp -> useR [label="No"];
+    useI -> out;
+    useR -> out;
+    reti -> out [style=dashed, label="unwind"];
+    out -> endn;
+}

@@ -1,0 +1,21 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n", shape=parallelogram];
+    call  [label="Call sumDigits(n)", shape=rectangle];
+    base  [label="n == 0 ?", shape=diamond];
+    ret0  [label="Return 0", shape=rectangle];
+    rec   [label="Call sumDigits(n / 10)", shape=rectangle];
+    add   [label="result = (n % 10) + sumDigits(n / 10)", shape=rectangle];
+    out   [label="Print / Return result", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret0 [label="Yes"];
+    base -> rec [label="No"];
+    rec -> base [label="recursive call"];
+    rec -> add [label="on return"];
+    add -> out;
+    ret0 -> out [style=dashed, label="unwind"];
+    out -> endn;
+}

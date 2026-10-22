@@ -1,0 +1,25 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input string s", shape=parallelogram];
+    call  [label="Call isPalin(s, start = 0, end = len-1)", shape=rectangle];
+    base1 [label="start >= end ?", shape=diamond];
+    retT  [label="Return true", shape=rectangle];
+    cmp   [label="s[start] != s[end] ?", shape=diamond];
+    retF  [label="Return false", shape=rectangle];
+    rec   [label="Call isPalin(s, start+1, end-1)", shape=rectangle];
+    outY  [label="Print \"Palindrome\"", shape=parallelogram];
+    outN  [label="Print \"Not Palindrome\"", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base1;
+    base1 -> retT [label="Yes"];
+    base1 -> cmp [label="No"];
+    cmp -> retF [label="Yes (mismatch)"];
+    cmp -> rec [label="No"];
+    rec -> base1 [label="recursive call"];
+    retT -> outY;
+    retF -> outN;
+    outY -> endn;
+    outN -> endn;
+}

@@ -1,0 +1,22 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+
+    start [label="Start", shape=oval];
+    inp   [label="Input n", shape=parallelogram];
+    call  [label="Call printBefore(n)", shape=rectangle];
+    base  [label="n == 0 ?", shape=diamond];
+    ret   [label="Return", shape=rectangle];
+    out   [label="Print n", shape=parallelogram];
+    rec   [label="Call printBefore(n - 1)", shape=rectangle];
+    endn  [label="End", shape=oval];
+
+    start -> inp;
+    inp -> call;
+    call -> base;
+    base -> ret [label="Yes"];
+    base -> out [label="No"];
+    out -> rec;
+    rec -> base [label="recursive call"];
+    ret -> endn;
+}

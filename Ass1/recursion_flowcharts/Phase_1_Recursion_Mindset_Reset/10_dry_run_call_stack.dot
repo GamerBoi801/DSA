@@ -1,0 +1,25 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+
+    start  [label="Start", shape=oval];
+    inp    [label="Input n", shape=parallelogram];
+    call   [label="Call f(n)\n(push frame on call stack)", shape=rectangle];
+    base   [label="n == 0 ?", shape=diamond];
+    record [label="Write down stack state:\nframe f(n) is active", shape=rectangle];
+    rec    [label="Call f(n - 1)\n(push new frame)", shape=rectangle];
+    retbase[label="Return from base case\n(pop frame)", shape=rectangle];
+    retfr  [label="Return to caller\n(pop frame)\nrecord unwind state", shape=rectangle];
+    endn   [label="End\n(stack empty)", shape=oval];
+
+    start -> inp;
+    inp -> call;
+    call -> base;
+    base -> retbase [label="Yes"];
+    base -> record [label="No"];
+    record -> rec;
+    rec -> base [label="recursive call"];
+    rec -> retfr [label="on return, pop frame"];
+    retbase -> retfr [style=dashed];
+    retfr -> endn;
+}

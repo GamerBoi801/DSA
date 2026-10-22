@@ -1,0 +1,19 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n", shape=parallelogram];
+    call  [label="Call diagonal(i = 1, n)", shape=rectangle];
+    base  [label="i > n ?", shape=diamond];
+    ret   [label="Return", shape=rectangle];
+    spc   [label="Call printSpaces(i - 1)\n(leading spaces for offset)", shape=rectangle];
+    star  [label="Print \"*\"", shape=parallelogram];
+    nl    [label="Print newline", shape=parallelogram];
+    rec   [label="Call diagonal(i + 1, n)", shape=rectangle];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret [label="Yes"];
+    base -> spc [label="No"];
+    spc -> star -> nl -> rec -> base [label="recursive call"];
+    ret -> endn;
+}

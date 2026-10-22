@@ -1,0 +1,17 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n", shape=parallelogram];
+    call  [label="Call printDigits(n)", shape=rectangle];
+    base  [label="n == 0 ?", shape=diamond];
+    ret   [label="Return", shape=rectangle];
+    out   [label="Print n % 10", shape=parallelogram];
+    rec   [label="Call printDigits(n / 10)", shape=rectangle];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret [label="Yes"];
+    base -> out [label="No"];
+    out -> rec -> base [label="recursive call"];
+    ret -> endn;
+}

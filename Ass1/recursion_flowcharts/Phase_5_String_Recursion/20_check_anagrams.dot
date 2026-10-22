@@ -1,0 +1,30 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input strings s1, s2", shape=parallelogram];
+    lenchk [label="s1.length() != s2.length() ?", shape=diamond];
+    retF0  [label="Return / Print \"Not Anagram\"", shape=rectangle];
+    sortcall [label="Call mergeSort(s1) and\nmergeSort(s2) recursively\n(sort both strings)", shape=rectangle];
+    base   [label="sorted s1.length() == 0\nor 1 ? (sort base case)", shape=diamond];
+    retSorted [label="Return sorted substring", shape=rectangle];
+    merge  [label="Merge two sorted halves", shape=rectangle];
+    cmp    [label="sorted(s1) == sorted(s2) ?", shape=diamond];
+    outY   [label="Print \"Anagram\"", shape=parallelogram];
+    outN   [label="Print \"Not Anagram\"", shape=parallelogram];
+    endn   [label="End", shape=oval];
+    start -> inp -> lenchk;
+    lenchk -> retF0 [label="Yes"];
+    lenchk -> sortcall [label="No"];
+    sortcall -> base;
+    base -> retSorted [label="Yes"];
+    base -> merge [label="No"];
+    merge -> base [label="recursive call"];
+    retSorted -> cmp [style=dashed, label="unwind"];
+    merge -> cmp [label="on return"];
+    cmp -> outY [label="Yes"];
+    cmp -> outN [label="No"];
+    outY -> endn;
+    outN -> endn;
+    retF0 -> endn;
+}

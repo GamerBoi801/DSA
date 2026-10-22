@@ -1,0 +1,25 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input string s, char c", shape=parallelogram];
+    call  [label="Call countFreq(s, i = 0, c)", shape=rectangle];
+    base  [label="i == s.length() ?", shape=diamond];
+    ret0  [label="Return 0", shape=rectangle];
+    chk   [label="s[i] == c ?", shape=diamond];
+    rec1  [label="Call countFreq(s,i+1,c)\nresult = countFreq(s,i+1,c)", shape=rectangle];
+    rec2  [label="Call countFreq(s,i+1,c)\nresult = 1 + countFreq(s,i+1,c)", shape=rectangle];
+    out   [label="Print / Return result", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret0 [label="Yes"];
+    base -> chk [label="No"];
+    chk -> rec2 [label="Yes"];
+    chk -> rec1 [label="No"];
+    rec1 -> base [label="recursive call"];
+    rec2 -> base [label="recursive call"];
+    rec1 -> out [label="on return"];
+    rec2 -> out [label="on return"];
+    ret0 -> out [style=dashed, label="unwind"];
+    out -> endn;
+}

@@ -1,0 +1,28 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input strings s1, s2", shape=parallelogram];
+    call  [label="Call compare(s1, s2, i = 0)", shape=rectangle];
+    baseLen [label="i == s1.length() AND\ni == s2.length() ?", shape=diamond];
+    retEq [label="Return 0 (equal)", shape=rectangle];
+    baseOne [label="i == s1.length() OR\ni == s2.length() ?", shape=diamond];
+    retLen  [label="Return (shorter string result,\ne.g. -1 or 1)", shape=rectangle];
+    cmp   [label="s1[i] != s2[i] ?", shape=diamond];
+    retDiff [label="Return s1[i] - s2[i]", shape=rectangle];
+    rec   [label="Call compare(s1, s2, i + 1)", shape=rectangle];
+    out   [label="Print / Return result", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> baseLen;
+    baseLen -> retEq [label="Yes"];
+    baseLen -> baseOne [label="No"];
+    baseOne -> retLen [label="Yes"];
+    baseOne -> cmp [label="No"];
+    cmp -> retDiff [label="Yes (mismatch)"];
+    cmp -> rec [label="No"];
+    rec -> baseLen [label="recursive call"];
+    retEq -> out;
+    retLen -> out;
+    retDiff -> out;
+    out -> endn;
+}

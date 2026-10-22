@@ -1,0 +1,17 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n (number of terms)", shape=parallelogram];
+    call  [label="Call printFib(i = 0, a = 0, b = 1, n)", shape=rectangle];
+    base  [label="i == n ?", shape=diamond];
+    ret   [label="Return", shape=rectangle];
+    out   [label="Print a", shape=parallelogram];
+    rec   [label="Call printFib(i + 1, b, a + b, n)", shape=rectangle];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret [label="Yes"];
+    base -> out [label="No"];
+    out -> rec -> base [label="recursive call"];
+    ret -> endn;
+}

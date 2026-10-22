@@ -1,0 +1,18 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n", shape=parallelogram];
+    call  [label="Call allTables(k = 1, n)", shape=rectangle];
+    base  [label="k > n ?", shape=diamond];
+    ret   [label="Return", shape=rectangle];
+    inner [label="Call table(k, 1, 10)\n(prints table of k, helper recursion)", shape=rectangle];
+    nl    [label="Print newline / separator", shape=parallelogram];
+    rec   [label="Call allTables(k + 1, n)", shape=rectangle];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret [label="Yes"];
+    base -> inner [label="No"];
+    inner -> nl -> rec -> base [label="recursive call"];
+    ret -> endn;
+}

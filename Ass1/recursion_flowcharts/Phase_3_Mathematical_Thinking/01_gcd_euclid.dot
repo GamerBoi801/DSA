@@ -1,0 +1,19 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input a, b", shape=parallelogram];
+    call  [label="Call gcd(a, b)", shape=rectangle];
+    base  [label="b == 0 ?", shape=diamond];
+    reta  [label="Return a", shape=rectangle];
+    rec   [label="Call gcd(b, a % b)", shape=rectangle];
+    out   [label="Print / Return result", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> reta [label="Yes"];
+    base -> rec [label="No"];
+    rec -> base [label="recursive call"];
+    reta -> out [style=dashed, label="unwind"];
+    rec -> out [label="propagate result"];
+    out -> endn;
+}

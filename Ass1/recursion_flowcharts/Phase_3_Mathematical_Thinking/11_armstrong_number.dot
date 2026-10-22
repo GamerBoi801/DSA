@@ -1,0 +1,26 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n\ncompute numDigits (k)", shape=parallelogram];
+    call  [label="Call sumPower(n, k)", shape=rectangle];
+    base  [label="n == 0 ?", shape=diamond];
+    ret0  [label="Return 0", shape=rectangle];
+    rec   [label="Call sumPower(n / 10, k)", shape=rectangle];
+    add   [label="result = pow(n % 10, k) + sumPower(n/10, k)", shape=rectangle];
+    cmp   [label="result == original n ?", shape=diamond];
+    outY  [label="Print \"Armstrong Number\"", shape=parallelogram];
+    outN  [label="Print \"Not Armstrong\"", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret0 [label="Yes"];
+    base -> rec [label="No"];
+    rec -> base [label="recursive call"];
+    rec -> add [label="on return"];
+    add -> cmp;
+    ret0 -> cmp [style=dashed, label="unwind"];
+    cmp -> outY [label="Yes"];
+    cmp -> outN [label="No"];
+    outY -> endn;
+    outN -> endn;
+}

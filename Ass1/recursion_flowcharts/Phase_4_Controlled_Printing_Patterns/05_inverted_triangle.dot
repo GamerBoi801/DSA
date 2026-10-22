@@ -1,0 +1,18 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n", shape=parallelogram];
+    call  [label="Call invTriangle(i = n, n)", shape=rectangle];
+    base  [label="i == 0 ?", shape=diamond];
+    ret   [label="Return", shape=rectangle];
+    inner [label="Call printStars(i)\n(prints i stars)", shape=rectangle];
+    nl    [label="Print newline", shape=parallelogram];
+    rec   [label="Call invTriangle(i - 1, n)", shape=rectangle];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret [label="Yes"];
+    base -> inner [label="No"];
+    inner -> nl -> rec -> base [label="recursive call"];
+    ret -> endn;
+}

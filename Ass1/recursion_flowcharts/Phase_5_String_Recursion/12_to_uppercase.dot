@@ -1,0 +1,26 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input string s", shape=parallelogram];
+    call  [label="Call toUpper(s, i = 0)", shape=rectangle];
+    base  [label="i == s.length() ?", shape=diamond];
+    rete  [label="Return \"\" (empty string)", shape=rectangle];
+    chk   [label="s[i] is lowercase ?", shape=diamond];
+    conv  [label="ch = toupper(s[i])", shape=rectangle];
+    keep  [label="ch = s[i]", shape=rectangle];
+    rec   [label="Call toUpper(s, i+1)\nresult = ch + toUpper(s, i+1)", shape=rectangle];
+    out   [label="Print / Return result", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> rete [label="Yes"];
+    base -> chk [label="No"];
+    chk -> conv [label="Yes"];
+    chk -> keep [label="No"];
+    conv -> rec;
+    keep -> rec;
+    rec -> base [label="recursive call"];
+    rec -> out [label="on return"];
+    rete -> out [style=dashed, label="unwind"];
+    out -> endn;
+}

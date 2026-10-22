@@ -1,0 +1,17 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input string s (C-string)", shape=parallelogram];
+    call  [label="Call printStr(s, i = 0)", shape=rectangle];
+    base  [label="s[i] == '\\0' ?\n(null terminator reached)", shape=diamond];
+    ret   [label="Return", shape=rectangle];
+    out   [label="Print s[i]", shape=parallelogram];
+    rec   [label="Call printStr(s, i + 1)", shape=rectangle];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret [label="Yes"];
+    base -> out [label="No"];
+    out -> rec -> base [label="recursive call"];
+    ret -> endn;
+}

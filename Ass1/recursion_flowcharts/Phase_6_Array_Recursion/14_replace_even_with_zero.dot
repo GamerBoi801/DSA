@@ -1,0 +1,21 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input array arr[], size n", shape=parallelogram];
+    call  [label="Call replaceEven(arr, i = 0, n)", shape=rectangle];
+    base  [label="i == n ?", shape=diamond];
+    ret   [label="Return", shape=rectangle];
+    chk   [label="arr[i] % 2 == 0 ?", shape=diamond];
+    setz  [label="arr[i] = 0", shape=rectangle];
+    rec   [label="Call replaceEven(arr, i + 1, n)", shape=rectangle];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret [label="Yes"];
+    base -> chk [label="No"];
+    chk -> setz [label="Yes"];
+    chk -> rec [label="No"];
+    setz -> rec;
+    rec -> base [label="recursive call"];
+    ret -> endn;
+}

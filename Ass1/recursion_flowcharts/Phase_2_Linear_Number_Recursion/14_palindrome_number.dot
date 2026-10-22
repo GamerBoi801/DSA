@@ -1,0 +1,24 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n", shape=parallelogram];
+    savecall [label="Call reverse(n, rev = 0)\nto build reversed number", shape=rectangle];
+    base  [label="n == 0 ?", shape=diamond];
+    retr  [label="Return rev", shape=rectangle];
+    upd   [label="rev = rev * 10 + (n % 10)\nn = n / 10", shape=rectangle];
+    rec   [label="Call reverse(n, rev)", shape=rectangle];
+    cmp   [label="reversed == original ?", shape=diamond];
+    outY  [label="Print \"Palindrome\"", shape=parallelogram];
+    outN  [label="Print \"Not Palindrome\"", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> savecall -> base;
+    base -> retr [label="Yes"];
+    base -> upd [label="No"];
+    upd -> rec -> base [label="recursive call"];
+    retr -> cmp;
+    cmp -> outY [label="Yes"];
+    cmp -> outN [label="No"];
+    outY -> endn;
+    outN -> endn;
+}

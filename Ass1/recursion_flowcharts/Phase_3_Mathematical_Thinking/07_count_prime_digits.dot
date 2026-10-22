@@ -1,0 +1,27 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n", shape=parallelogram];
+    call  [label="Call countPrimeDigits(n)", shape=rectangle];
+    base  [label="n == 0 ?", shape=diamond];
+    ret0  [label="Return 0", shape=rectangle];
+    digit [label="digit = n % 10", shape=rectangle];
+    chk   [label="digit is 2, 3, 5, or 7 ?\n(isPrimeDigit)", shape=diamond];
+    rec1  [label="Call countPrimeDigits(n / 10)\nresult = countPrimeDigits(n/10)", shape=rectangle];
+    rec2  [label="Call countPrimeDigits(n / 10)\nresult = 1 + countPrimeDigits(n/10)", shape=rectangle];
+    out   [label="Print / Return result", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret0 [label="Yes"];
+    base -> digit [label="No"];
+    digit -> chk;
+    chk -> rec2 [label="Yes"];
+    chk -> rec1 [label="No"];
+    rec1 -> base [label="recursive call"];
+    rec2 -> base [label="recursive call"];
+    rec1 -> out [label="on return"];
+    rec2 -> out [label="on return"];
+    ret0 -> out [style=dashed, label="unwind"];
+    out -> endn;
+}

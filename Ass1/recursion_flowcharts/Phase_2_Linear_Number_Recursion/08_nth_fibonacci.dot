@@ -1,0 +1,24 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n", shape=parallelogram];
+    call  [label="Call fib(n)", shape=rectangle];
+    base  [label="n == 0 or n == 1 ?", shape=diamond];
+    retn  [label="Return n", shape=rectangle];
+    rec1  [label="Call fib(n - 1)", shape=rectangle];
+    rec2  [label="Call fib(n - 2)", shape=rectangle];
+    add   [label="result = fib(n-1) + fib(n-2)", shape=rectangle];
+    out   [label="Print / Return result", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> retn [label="Yes"];
+    base -> rec1 [label="No"];
+    rec1 -> base [label="recursive call"];
+    rec1 -> rec2 [label="on return"];
+    rec2 -> base [label="recursive call"];
+    rec2 -> add [label="on return"];
+    add -> out;
+    retn -> out [style=dashed, label="unwind"];
+    out -> endn;
+}

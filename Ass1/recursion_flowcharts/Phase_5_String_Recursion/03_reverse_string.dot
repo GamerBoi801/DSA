@@ -1,0 +1,21 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input string s", shape=parallelogram];
+    call  [label="Call reverse(s)", shape=rectangle];
+    base  [label="s.length() <= 1 ?", shape=diamond];
+    rets  [label="Return s", shape=rectangle];
+    rec   [label="Call reverse(s.substr(1))\n(reverse of rest of string)", shape=rectangle];
+    concat[label="result = reverse(s.substr(1)) + s[0]", shape=rectangle];
+    out   [label="Print / Return result", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> rets [label="Yes"];
+    base -> rec [label="No"];
+    rec -> base [label="recursive call"];
+    rec -> concat [label="on return"];
+    concat -> out;
+    rets -> out [style=dashed, label="unwind"];
+    out -> endn;
+}

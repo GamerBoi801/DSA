@@ -1,0 +1,31 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input array arr[], size n, target x", shape=parallelogram];
+    call  [label="Call lastOcc(arr, i = 0, n, x)", shape=rectangle];
+    base  [label="i == n ?", shape=diamond];
+    retNF [label="Return -1 (not found)", shape=rectangle];
+    rec   [label="Call lastOcc(arr, i + 1, n, x)\nresFromRest = lastOcc(...)", shape=rectangle];
+    chkR  [label="resFromRest != -1 ?\n(found later)", shape=diamond];
+    useR  [label="result = resFromRest", shape=rectangle];
+    chkHere [label="arr[i] == x ?", shape=diamond];
+    useI  [label="result = i", shape=rectangle];
+    useNF [label="result = -1", shape=rectangle];
+    out   [label="Print / Return result", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> retNF [label="Yes"];
+    base -> rec [label="No"];
+    rec -> base [label="recursive call"];
+    rec -> chkR [label="on return"];
+    chkR -> useR [label="Yes"];
+    chkR -> chkHere [label="No"];
+    chkHere -> useI [label="Yes"];
+    chkHere -> useNF [label="No"];
+    useR -> out;
+    useI -> out;
+    useNF -> out;
+    retNF -> out [style=dashed, label="unwind"];
+    out -> endn;
+}

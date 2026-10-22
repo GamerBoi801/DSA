@@ -1,0 +1,25 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input string s", shape=parallelogram];
+    call  [label="Call countConsonants(s, i = 0)", shape=rectangle];
+    base  [label="i == s.length() ?", shape=diamond];
+    ret0  [label="Return 0", shape=rectangle];
+    chk   [label="s[i] is alphabet AND\nnot a vowel ?", shape=diamond];
+    rec2  [label="Call countConsonants(s, i+1)\nresult = 1 + countConsonants(s, i+1)", shape=rectangle];
+    rec1  [label="Call countConsonants(s, i+1)\nresult = countConsonants(s, i+1)", shape=rectangle];
+    out   [label="Print / Return result", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret0 [label="Yes"];
+    base -> chk [label="No"];
+    chk -> rec2 [label="Yes"];
+    chk -> rec1 [label="No"];
+    rec1 -> base [label="recursive call"];
+    rec2 -> base [label="recursive call"];
+    rec1 -> out [label="on return"];
+    rec2 -> out [label="on return"];
+    ret0 -> out [style=dashed, label="unwind"];
+    out -> endn;
+}

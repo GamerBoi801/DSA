@@ -1,0 +1,17 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input array arr[], size n", shape=parallelogram];
+    call  [label="Call reverseArr(arr, start = 0, end = n-1)", shape=rectangle];
+    base  [label="start >= end ?", shape=diamond];
+    ret   [label="Return", shape=rectangle];
+    swap  [label="Swap arr[start] and arr[end]", shape=rectangle];
+    rec   [label="Call reverseArr(arr, start+1, end-1)", shape=rectangle];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret [label="Yes"];
+    base -> swap [label="No"];
+    swap -> rec -> base [label="recursive call"];
+    ret -> endn;
+}

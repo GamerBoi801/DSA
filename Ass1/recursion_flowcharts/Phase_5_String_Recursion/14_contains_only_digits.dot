@@ -1,0 +1,25 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input string s", shape=parallelogram];
+    call  [label="Call onlyDigits(s, i = 0)", shape=rectangle];
+    base  [label="i == s.length() ?", shape=diamond];
+    retT  [label="Return true", shape=rectangle];
+    chk   [label="isdigit(s[i]) ?", shape=diamond];
+    retF  [label="Return false", shape=rectangle];
+    rec   [label="Call onlyDigits(s, i+1)", shape=rectangle];
+    outY  [label="Print \"Only Digits\"", shape=parallelogram];
+    outN  [label="Print \"Contains non-digit\"", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> retT [label="Yes"];
+    base -> chk [label="No"];
+    chk -> rec [label="Yes"];
+    chk -> retF [label="No"];
+    rec -> base [label="recursive call"];
+    retT -> outY;
+    retF -> outN;
+    outY -> endn;
+    outN -> endn;
+}

@@ -1,0 +1,21 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n", shape=parallelogram];
+    call  [label="Call updown(i = 1, n)", shape=rectangle];
+    base  [label="i > n ?", shape=diamond];
+    ret   [label="Return", shape=rectangle];
+    outB  [label="Print i\n(before recursive call,\nascending order)", shape=parallelogram];
+    rec   [label="Call updown(i + 1, n)", shape=rectangle];
+    outA  [label="Print i\n(after recursive call returns,\ndescending order)", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret [label="Yes"];
+    base -> outB [label="No"];
+    outB -> rec;
+    rec -> base [label="recursive call"];
+    rec -> outA [label="on return"];
+    outA -> endn [style=dashed, label="unwind"];
+    ret -> endn;
+}

@@ -1,0 +1,21 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n", shape=parallelogram];
+    call  [label="Call digitalRoot(n)", shape=rectangle];
+    base  [label="n < 10 ?\n(single digit)", shape=diamond];
+    retn  [label="Return n", shape=rectangle];
+    sumcall [label="Call sumDigits(n)\nto get sum of digits", shape=rectangle];
+    rec   [label="Call digitalRoot(sum)", shape=rectangle];
+    out   [label="Print / Return result", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> retn [label="Yes"];
+    base -> sumcall [label="No"];
+    sumcall -> rec;
+    rec -> base [label="recursive call"];
+    rec -> out [label="on return"];
+    retn -> out [style=dashed, label="unwind"];
+    out -> endn;
+}

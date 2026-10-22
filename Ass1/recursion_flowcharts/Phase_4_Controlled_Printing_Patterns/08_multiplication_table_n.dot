@@ -1,0 +1,17 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n, i = 1, limit = 10", shape=parallelogram];
+    call  [label="Call table(n, i, limit)", shape=rectangle];
+    base  [label="i > limit ?", shape=diamond];
+    ret   [label="Return", shape=rectangle];
+    out   [label="Print n, \" x \", i, \" = \", n*i", shape=parallelogram];
+    rec   [label="Call table(n, i + 1, limit)", shape=rectangle];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret [label="Yes"];
+    base -> out [label="No"];
+    out -> rec -> base [label="recursive call"];
+    ret -> endn;
+}

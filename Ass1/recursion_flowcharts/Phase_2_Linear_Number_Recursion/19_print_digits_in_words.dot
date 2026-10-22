@@ -1,0 +1,21 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n", shape=parallelogram];
+    call  [label="Call printWords(n)", shape=rectangle];
+    base  [label="n == 0 ?", shape=diamond];
+    ret   [label="Return", shape=rectangle];
+    rec   [label="Call printWords(n / 10)", shape=rectangle];
+    lookup[label="Map digit (n % 10) to word\nusing words[] array", shape=rectangle];
+    out   [label="Print word\n(executed after recursive\ncall returns, preserves order)", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret [label="Yes"];
+    base -> rec [label="No"];
+    rec -> base [label="recursive call"];
+    rec -> lookup [label="on return"];
+    lookup -> out;
+    out -> endn [style=dashed, label="unwind"];
+    ret -> endn;
+}

@@ -1,0 +1,25 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input array arr[], size n", shape=parallelogram];
+    call  [label="Call isSorted(arr, i = 0, n)", shape=rectangle];
+    base  [label="i == n - 1 ?\n(reached last element)", shape=diamond];
+    retT  [label="Return true", shape=rectangle];
+    cmp   [label="arr[i] > arr[i + 1] ?", shape=diamond];
+    retF  [label="Return false", shape=rectangle];
+    rec   [label="Call isSorted(arr, i + 1, n)", shape=rectangle];
+    outY  [label="Print \"Sorted\"", shape=parallelogram];
+    outN  [label="Print \"Not Sorted\"", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> retT [label="Yes"];
+    base -> cmp [label="No"];
+    cmp -> retF [label="Yes (out of order)"];
+    cmp -> rec [label="No"];
+    rec -> base [label="recursive call"];
+    retT -> outY;
+    retF -> outN;
+    outY -> endn;
+    outN -> endn;
+}

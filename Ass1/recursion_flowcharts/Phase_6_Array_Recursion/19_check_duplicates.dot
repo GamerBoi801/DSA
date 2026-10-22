@@ -1,0 +1,30 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input array arr[], size n", shape=parallelogram];
+    call  [label="Call hasDup(arr, i = 0, j = 1, n)\n(i, j are the pair being compared)", shape=rectangle];
+    baseI [label="i == n - 1 ?\n(all pairs checked)", shape=diamond];
+    retF  [label="Return false", shape=rectangle];
+    baseJ [label="j == n ?\n(finished row for this i)", shape=diamond];
+    nextRow [label="Call hasDup(arr, i+1, i+2, n)\n(advance to next i)", shape=rectangle];
+    cmp   [label="arr[i] == arr[j] ?", shape=diamond];
+    retT  [label="Return true", shape=rectangle];
+    nextCol [label="Call hasDup(arr, i, j+1, n)", shape=rectangle];
+    outY  [label="Print \"Duplicates Found\"", shape=parallelogram];
+    outN  [label="Print \"No Duplicates\"", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> baseI;
+    baseI -> retF [label="Yes"];
+    baseI -> baseJ [label="No"];
+    baseJ -> nextRow [label="Yes"];
+    nextRow -> baseI [label="recursive call"];
+    baseJ -> cmp [label="No"];
+    cmp -> retT [label="Yes"];
+    cmp -> nextCol [label="No"];
+    nextCol -> baseI [label="recursive call"];
+    retT -> outY;
+    retF -> outN;
+    outY -> endn;
+    outN -> endn;
+}

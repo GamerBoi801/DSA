@@ -1,0 +1,22 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n, source, auxiliary, destination", shape=parallelogram];
+    call  [label="Call hanoi(n, src, aux, dest)", shape=rectangle];
+    base  [label="n == 0 ?", shape=diamond];
+    ret   [label="Return (nothing to move)", shape=rectangle];
+    rec1  [label="Call hanoi(n - 1, src, dest, aux)\n(move n-1 disks src -> aux)", shape=rectangle];
+    move  [label="Print \"Move disk n from src to dest\"", shape=parallelogram];
+    rec2  [label="Call hanoi(n - 1, aux, src, dest)\n(move n-1 disks aux -> dest)", shape=rectangle];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret [label="Yes"];
+    base -> rec1 [label="No"];
+    rec1 -> base [label="recursive call"];
+    rec1 -> move [label="on return"];
+    move -> rec2;
+    rec2 -> base [label="recursive call"];
+    ret -> endn;
+    rec2 -> endn [label="on final return"];
+}

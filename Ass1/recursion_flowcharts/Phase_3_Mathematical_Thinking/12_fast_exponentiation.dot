@@ -1,0 +1,26 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input x, n", shape=parallelogram];
+    call  [label="Call fastPow(x, n)", shape=rectangle];
+    base  [label="n == 0 ?", shape=diamond];
+    ret1  [label="Return 1", shape=rectangle];
+    half  [label="Call fastPow(x, n / 2)\nhalf = fastPow(x, n/2)", shape=rectangle];
+    parity[label="n is even ?", shape=diamond];
+    sqr   [label="result = half * half", shape=rectangle];
+    sqrx  [label="result = half * half * x", shape=rectangle];
+    out   [label="Print / Return result", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret1 [label="Yes"];
+    base -> half [label="No"];
+    half -> base [label="recursive call"];
+    half -> parity [label="on return"];
+    parity -> sqr [label="Yes"];
+    parity -> sqrx [label="No"];
+    sqr -> out;
+    sqrx -> out;
+    ret1 -> out [style=dashed, label="unwind"];
+    out -> endn;
+}

@@ -1,0 +1,28 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n", shape=parallelogram];
+    call  [label="Call isPrime(n, i = 2)", shape=rectangle];
+    base1 [label="n < 2 ?", shape=diamond];
+    retF  [label="Return false", shape=rectangle];
+    base2 [label="i * i > n ?", shape=diamond];
+    retT  [label="Return true", shape=rectangle];
+    chk   [label="n % i == 0 ?", shape=diamond];
+    rec   [label="Call isPrime(n, i + 1)", shape=rectangle];
+    outY  [label="Print \"Prime\"", shape=parallelogram];
+    outN  [label="Print \"Not Prime\"", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base1;
+    base1 -> retF [label="Yes"];
+    base1 -> base2 [label="No"];
+    base2 -> retT [label="Yes"];
+    base2 -> chk [label="No"];
+    chk -> retF [label="Yes (divisible)"];
+    chk -> rec [label="No"];
+    rec -> base2 [label="recursive call"];
+    retT -> outY;
+    retF -> outN;
+    outY -> endn;
+    outN -> endn;
+}

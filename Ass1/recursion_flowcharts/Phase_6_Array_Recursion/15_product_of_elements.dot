@@ -1,0 +1,21 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input array arr[], size n", shape=parallelogram];
+    call  [label="Call productArr(arr, i = 0, n)", shape=rectangle];
+    base  [label="i == n ?", shape=diamond];
+    ret1  [label="Return 1", shape=rectangle];
+    rec   [label="Call productArr(arr, i + 1, n)", shape=rectangle];
+    mul   [label="result = arr[i] * productArr(arr, i+1, n)", shape=rectangle];
+    out   [label="Print / Return result", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret1 [label="Yes"];
+    base -> rec [label="No"];
+    rec -> base [label="recursive call"];
+    rec -> mul [label="on return"];
+    mul -> out;
+    ret1 -> out [style=dashed, label="unwind"];
+    out -> endn;
+}

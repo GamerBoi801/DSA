@@ -1,0 +1,23 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n", shape=parallelogram];
+    call  [label="Call maxMinDigit(n)", shape=rectangle];
+    base  [label="n < 10 ?\n(single digit left)", shape=diamond];
+    retd  [label="Return (n, n)\nas (max, min)", shape=rectangle];
+    rec   [label="Call maxMinDigit(n / 10)\nreturns (subMax, subMin)", shape=rectangle];
+    digit [label="digit = n % 10", shape=rectangle];
+    cmax  [label="max = (digit > subMax) ? digit : subMax", shape=rectangle];
+    cmin  [label="min = (digit < subMin) ? digit : subMin", shape=rectangle];
+    out   [label="Print / Return (max, min)", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> retd [label="Yes"];
+    base -> rec [label="No"];
+    rec -> base [label="recursive call"];
+    rec -> digit [label="on return"];
+    digit -> cmax -> cmin -> out;
+    retd -> out [style=dashed, label="unwind"];
+    out -> endn;
+}

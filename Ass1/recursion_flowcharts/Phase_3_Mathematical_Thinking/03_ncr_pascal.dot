@@ -1,0 +1,24 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n, r", shape=parallelogram];
+    call  [label="Call nCr(n, r)", shape=rectangle];
+    base  [label="r == 0 or r == n ?", shape=diamond];
+    ret1  [label="Return 1", shape=rectangle];
+    rec1  [label="Call nCr(n - 1, r - 1)", shape=rectangle];
+    rec2  [label="Call nCr(n - 1, r)", shape=rectangle];
+    add   [label="result = nCr(n-1,r-1) + nCr(n-1,r)\n(Pascal's relation)", shape=rectangle];
+    out   [label="Print / Return result", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base;
+    base -> ret1 [label="Yes"];
+    base -> rec1 [label="No"];
+    rec1 -> base [label="recursive call"];
+    rec1 -> rec2 [label="on return"];
+    rec2 -> base [label="recursive call"];
+    rec2 -> add [label="on return"];
+    add -> out;
+    ret1 -> out [style=dashed, label="unwind"];
+    out -> endn;
+}

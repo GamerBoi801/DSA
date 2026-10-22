@@ -1,0 +1,23 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input n", shape=parallelogram];
+    call  [label="Call pattern(i = 1, j = 1, n)\n(single function, i tracks row,\nj tracks column)", shape=rectangle];
+    baseI [label="i > n ?\n(all rows done)", shape=diamond];
+    ret   [label="Return", shape=rectangle];
+    baseJ [label="j > i ?\n(end of this row)", shape=diamond];
+    nl    [label="Print newline", shape=parallelogram];
+    recRow[label="Call pattern(i + 1, j = 1, n)\n(move to next row)", shape=rectangle];
+    out   [label="Print symbol for (i, j)", shape=parallelogram];
+    recCol[label="Call pattern(i, j + 1, n)\n(move to next column)", shape=rectangle];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> baseI;
+    baseI -> ret [label="Yes"];
+    baseI -> baseJ [label="No"];
+    baseJ -> nl [label="Yes"];
+    nl -> recRow -> baseI [label="recursive call"];
+    baseJ -> out [label="No"];
+    out -> recCol -> baseI [label="recursive call"];
+    ret -> endn;
+}

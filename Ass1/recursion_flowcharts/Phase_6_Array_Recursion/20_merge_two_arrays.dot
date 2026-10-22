@@ -1,0 +1,25 @@
+digraph G {
+    rankdir=TB;
+    node [fontname="Helvetica", fontsize=11];
+    start [label="Start", shape=oval];
+    inp   [label="Input arr1[], n1, arr2[], n2, result[]", shape=parallelogram];
+    call  [label="Call mergeArr(arr1, i=0, n1, arr2, j=0, n2, result, k=0)", shape=rectangle];
+    base1 [label="i == n1 ?\n(arr1 exhausted)", shape=diamond];
+    copy2 [label="Call copyRest(arr2, j, n2, result, k)\n(copy remaining arr2 recursively)", shape=rectangle];
+    base2 [label="j == n2 ?\n(arr2 exhausted)", shape=diamond];
+    copy1 [label="Call copyRest(arr1, i, n1, result, k)\n(copy remaining arr1 recursively)", shape=rectangle];
+    put   [label="result[k] = arr1[i]\nor result[k] = arr2[j]", shape=rectangle];
+    rec   [label="Call mergeArr(..., i+1 or j+1, ..., k+1)", shape=rectangle];
+    out   [label="Print / Return result[]", shape=parallelogram];
+    endn  [label="End", shape=oval];
+    start -> inp -> call -> base1;
+    base1 -> copy2 [label="Yes"];
+    base1 -> base2 [label="No"];
+    base2 -> copy1 [label="Yes"];
+    base2 -> put [label="No"];
+    put -> rec -> base1 [label="recursive call"];
+    copy1 -> out [style=dashed, label="unwind"];
+    copy2 -> out [style=dashed, label="unwind"];
+    rec -> out [label="propagate result"];
+    out -> endn;
+}
