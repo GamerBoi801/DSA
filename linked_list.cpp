@@ -3,7 +3,7 @@
 using namespace std;
 
 struct node {
-    int num;        // value of the node
+    int data;        // value of the node
     node* next;     // pointer to the next node
 };
 
@@ -22,7 +22,7 @@ void display(node *head) {
 
     node *temp = head; 
     while (temp != nullptr) {
-        cout << temp->num << " ";
+        cout << temp->data << " ";
         temp = temp->next;
     }
     cout << endl;
@@ -31,7 +31,7 @@ void display(node *head) {
 
 void insert_at_head(node* &head, int val) {
     node *temp = new node;
-    temp->num = val;
+    temp->data = val;
     temp->next = head;
     head = temp;
 
@@ -40,7 +40,7 @@ void insert_at_head(node* &head, int val) {
 
 void insert_at_end(node* &head, int val) {
     node *new_node = new node;
-    new_node->num = val;
+    new_node->data = val;
     new_node->next = nullptr; 
 
     if (head == nullptr) { 
@@ -68,7 +68,7 @@ void insert_at_pos(node* &head, int val, int pos) {
     }
 
     node *new_node = new node;
-    new_node->num = val;
+    new_node->data = val;
     
     new_node->next = temp->next;
     temp->next = new_node;
@@ -89,14 +89,14 @@ void delete_by_value(node* &head, int val) {
     if (head == nullptr) return;
 
     // If the node to be deleted is the head
-    if (head->num == val) {
+    if (head->data == val) {
         delete_at_head(head);
         return;
     }
 
     node* temp = head;
     // Traverse to find the node JUST BEFORE the target node
-    while (temp->next != nullptr && temp->next->num != val) {
+    while (temp->next != nullptr && temp->next->data != val) {
         temp = temp->next;
     }
 
@@ -110,6 +110,71 @@ void delete_by_value(node* &head, int val) {
     node* node_to_delete = temp->next;
     temp->next = temp->next->next;
     delete node_to_delete;
+}
+
+node* find_middle(node *head) {
+    // fst & slow pointers
+    node* slow = head;
+    node* fast = head;
+
+    while(fast != nullptr && fast->next != nullptr) {
+        slow = slow->next; // 1step
+        fast = fast->next->next; // 2stesp
+    }
+
+    return  slow;
+}
+
+void rev_list(node* &head) {
+    node* prev = nullptr;
+    node*curr = head;
+
+    while(curr!= nullptr) {
+        // noting down where to go next once before breaking the arrow
+        node* next_node = curr->next;
+
+        // convert -> to <-
+        curr->next = prev;
+
+        // move both ptrs one step forward for the enxt loop
+        prev = curr;
+        curr = next_node;
+    }
+}
+
+node*  merge_list(node* l1, node* l2) {
+    // 
+    node* dummy = new node; // our new head ptr
+
+    // tail poitns to teh last node
+    node* tail = dummy;
+
+    // keep comparing as long as both lists have elemntsin them
+    while(l1 != nullptr && l2 != nullptr) {
+
+        if (l1->data <= l2->data) {
+            tail->next = l1; // attach l1 node
+            l1 = l1->next; // move l1 forwadrd
+        }
+        else {
+            tail->next = l2;
+            l2 = l2->next;
+        }
+        tail = tail->next;
+    }
+
+    // filling missing key elments
+    if (l1 != nullptr) {
+        tail->next = l1;
+    } else {
+        tail->next = l2;
+    }
+
+    node* result = dummy->next;
+    delete dummy;
+    return result;
+
+
 }
 
 int main() {
