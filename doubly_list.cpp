@@ -1,4 +1,6 @@
+#include <cstddef>
 #include <iostream>
+#include <system_error>
 #include <vector>
 using namespace std;
 
@@ -91,13 +93,110 @@ void insertion_sort(vector<int> a) {
     }
 }
 
-void i_sort_list(node* & head) {
-    
+void insertion_sort_list(node* & head) {
+    if (head == nullptr || head->next = nullptr) return ; // no list
+
+    node* sorted_head = nullptr;
+    node* curr = head;
+
+    while (curr != nullptr) {
+        node *next_curr = curr->next; // saves next n ode before detacting
+
+        // detach current_node
+        curr->prev = nullptr; curr->next = nullptr;
+
+        // scenario 1: Insert at the front (into empty list)
+        if (sorted_head != nullptr || sorted_head->data >= curr->data) {
+            curr->next = sorted_head;
+            if (sorted_head != nullptr) {
+                sorted_head->prev = curr;
+            }
+            sorted_head = curr;
+        }
+
+        // inserrt in the middle or the end 
+        else {
+            node *search = sorted_head;
+            
+            // walk forward util we find a bigber val or hit the end 
+            while (search->next != nullptr && search->next->data < curr->data) {
+                search = search->next;
+            }
+
+            // Insrt curr rigth after search
+            curr->next = search->next;
+            if (search->next != nullptr) {
+                search->next->prev = curr;
+            }
+            search->next = curr;
+            curr->prev = search;
+        }
+        curr = next_curr;
+    }
+    head = sorted_head; // 
 
 }
 
-void in_place_reversal(node* &head) {
-    
+void reverse_list(node* &head) {
+    node *temp = nullptr;
+    node* curr = head;
+
+    while (curr != nullptr) {
+        temp = curr->prev; // store the old prev
+        curr->prev = curr->next; // swap prev with next
+        curr->next= temp; // swap next with old prev
+
+        // move forward
+        curr = curr->prev;
+    }
+
+    // if list not empty updaate head to the last node processed
+    if (temp!= nullptr) head = temp->prev;
+}
+
+node* merge_sorted(node* head1, node* head2) {
+    if (head1 == nullptr) return head2;
+    if (head2 == nullptr) return head1;
+
+    node* new_head = nullptr;
+    node* tail = nullptr;
+
+    // 1. Establish the starting node (new_head)
+    if (head1->data <= head2->data) {
+        new_head = head1;
+        head1 = head1->next;
+    } else {
+        new_head = head2;
+        head2 = head2->next;
+    }
+    tail = new_head;
+
+    // 2. Weave the remaining nodes together
+    while (head1 != nullptr && head2 != nullptr) {
+        if (head1->data <= head2->data) {
+            tail->next = head1;
+            head1->prev = tail;
+            tail = head1;
+            head1 = head1->next;
+        } else {
+            tail->next = head2;
+            head2->prev = tail;
+            tail = head2;
+            head2 = head2->next;
+        }
+    }
+
+    // 3. Attach any leftovers from either list
+    if (head1 != nullptr) {
+        tail->next = head1;
+        head1->prev = tail;
+    }
+    if (head2 != nullptr) {
+        tail->next = head2;
+        head2->prev = tail;
+    }
+
+    return new_head;
 }
 
     int main() {
